@@ -1,0 +1,39 @@
+[package]
+name = "torresix"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.dev]
+opt-level = 0
+debug = true
+
+[dependencies]
+hyper = { version = "0.14", features = [ "full" ] }
+hyper-tls = "0.5.0"
+
+tonic = { version = "0.8.2", features = [ "tls", "gzip" ] }
+tokio = { version = "1.0", features = [ "rt-multi-thread", "time", "fs", "macros", "net" ] }
+
+tract-tensorflow = "0.19.8"
+image = "0.24.6"
+prost = "0.11"
+prost-types = "0.11"
+anyhow = "1.0.70"
+
+[build-dependencies]
+tonic-build = { version = "0.8.2", features = [ "prost" ] }
