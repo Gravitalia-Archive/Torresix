@@ -1,0 +1,2 @@
+pub type TensorflowModel = tract_tensorflow::prelude::SimplePlan<tract_tensorflow::prelude::TypedFact, Box<dyn tract_tensorflow::prelude::TypedOp>, tract_tensorflow::prelude::Graph<tract_tensorflow::prelude::TypedFact, Box<dyn tract_tensorflow::prelude::TypedOp>>>;
+pub mod mobilenet;
