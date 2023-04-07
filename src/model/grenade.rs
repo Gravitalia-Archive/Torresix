@@ -25,7 +25,7 @@ pub fn init() -> Result<super::TensorflowModel> {
 
 pub fn predict(model: super::TensorflowModel, buffer: Vec<u8>) -> Result<String> {
     let img = image::load_from_memory(&buffer)?;
-    let resized_img = image::imageops::resize(&img, 224, 224, ::image::imageops::FilterType::Nearest); //img.resize_exact(224, 224, image::imageops::FilterType::Nearest);
+    let resized_img = image::imageops::resize(&img, 224, 224, ::image::imageops::FilterType::Nearest);
 
     let img_array: Tensor = tract_ndarray::Array::from_shape_fn((1, 3, 224, 224), |(_, c, y, x)| {
         resized_img.get_pixel(x as u32, y as u32)[c] as f32
