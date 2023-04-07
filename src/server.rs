@@ -13,7 +13,8 @@ pub mod torresix {
 
 pub struct TorreSix {
     _client: Client<hyper_tls::HttpsConnector<HttpConnector<GaiResolver>>, Body>,
-    mobilenet: model::TensorflowModel
+    mobilenet: model::TensorflowModel,
+    grenade: model::TensorflowModel
 }
 
 #[tonic::async_trait]
@@ -27,6 +28,9 @@ impl Torre for TorreSix {
         let result: String = match body.model {
             0 => {
                 model::mobilenet::predict(self.mobilenet.clone(), body.data).unwrap_or_default()
+            },
+            1 => {
+                model::grenade::predict(self.grenade.clone(), body.data).unwrap_or_default()
             },
             _ => {
                 return Ok(Response::new(TorreReply {
@@ -51,7 +55,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("Server listening on {}", addr);
     Server::builder()
-        .add_service(TorreServer::new(TorreSix { _client: Client::builder().build::<_, hyper::Body>(HttpsConnector::new()), mobilenet: model::mobilenet::init()? }))
+        .add_service(TorreServer::new(TorreSix { _client: Client::builder().build::<_, hyper::Body>(HttpsConnector::new()), mobilenet: model::mobilenet::init()?, grenade: model::grenade::init()? }))
         .serve(addr)
         .await?;
 
