@@ -1007,7 +1007,7 @@ const RESULT: [&str; 1001] = [
 
 pub fn init() -> Result<super::TensorflowModel> {
     let model = tract_onnx::onnx()
-        .model_for_path("models/mobilenetv2-7.onnx")?
+        .model_for_path("models/mobilenetv2-12.onnx")?
         .into_optimized()?
         .into_runnable()?;
 

@@ -15,7 +15,7 @@ Torresix is a fast and powerful AI for Gravitalia services ⚡️
 
 In order to use the code, you'll need to get the Mobilenet model:
 ```
-wget https://github.com/onnx/models/raw/main/vision/classification/mobilenet/model/mobilenetv2-7.onnx
+wget https://github.com/onnx/models/raw/main/vision/classification/mobilenet/model/mobilenetv2-12.onnx
 ```
 
-Then, put `mobilenetv2-7.onnx` into the folder `models`
+Then, put `mobilenetv2-12.onnx` into the folder `models`
