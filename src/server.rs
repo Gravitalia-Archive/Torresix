@@ -3,16 +3,12 @@ use tonic::{transport::Server, Request, Response, Status};
 use torresix::torre_server::{Torre, TorreServer};
 use torresix::{TorreRequest, TorreReply};
 
-use hyper::{Client, client::{HttpConnector, connect::dns::GaiResolver}, Body};
-use hyper_tls::HttpsConnector;
-
 mod model;
 pub mod torresix {
     tonic::include_proto!("torresix");
 }
 
 pub struct TorreSix {
-    _client: Client<hyper_tls::HttpsConnector<HttpConnector<GaiResolver>>, Body>,
     mobilenet: model::TensorflowModel,
     grenade: model::TensorflowModel
 }
@@ -55,7 +51,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     println!("Server listening on {}", addr);
     Server::builder()
-        .add_service(TorreServer::new(TorreSix { _client: Client::builder().build::<_, hyper::Body>(HttpsConnector::new()), mobilenet: model::mobilenet::init()?, grenade: model::grenade::init()? }))
+        .add_service(TorreServer::new(TorreSix { mobilenet: model::mobilenet::init()?, grenade: model::grenade::init()? }))
         .serve(addr)
         .await?;
 
