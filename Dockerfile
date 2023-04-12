@@ -6,7 +6,8 @@ WORKDIR /torresix
 COPY ./Cargo.toml ./Cargo.toml
 COPY ./src ./src
 COPY ./build.rs ./build.rs
-COPY proto/ proto/
+COPY --from=build proto/ proto/
+COPY --from=build /models /models
 
 RUN apt-get update && apt-get install -y libssl-dev pkg-config protobuf-compiler
 
