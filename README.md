@@ -1,7 +1,7 @@
 # Torresix
 Torresix is a fast and powerful AI for Gravitalia services ⚡️
 
-<img src="https://media.discordapp.net/attachments/844241319165558803/1091795959949819955/image.png?width=803&height=662" />
+<img src="https://raw.githubusercontent.com/Gravitalia/.github/main/torresix/graphic.png" width="600" />
 
 # Detailed description
 
