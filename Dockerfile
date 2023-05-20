@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y libssl-dev pkg-config protobuf-compiler
 
 RUN cargo build --release --bin server
 
-FROM debian:buster
+FROM debian:buster-slim
 
 COPY --from=build /torresix/target/release/server .
 
