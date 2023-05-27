@@ -1,19 +1,22 @@
-FROM rust:1.68 as build
+FROM rust:1.69 as build
 
 RUN USER=root cargo new --bin torresix
 WORKDIR /torresix
 
 COPY ./Cargo.toml ./Cargo.toml
-COPY ./src ./src
 COPY ./build.rs ./build.rs
 COPY --from=build proto/ proto/
 COPY --from=build /models /models
 
-RUN apt-get update && apt-get install -y libssl-dev pkg-config protobuf-compiler
+RUN cargo build --release \
+ && rm src/*.rs
 
-RUN cargo build --release --bin server
+COPY ./src ./src
 
-FROM rust:1.68-slim-buster
+RUN rm ./target/release/deps/torresix* \
+ && cargo build --release --bin server
+
+FROM rust:1.69-slim-buster
 
 COPY --from=build /torresix/target/release/server .
 
