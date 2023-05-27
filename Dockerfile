@@ -5,8 +5,8 @@ WORKDIR /torresix
 
 COPY ./Cargo.toml ./Cargo.toml
 COPY ./build.rs ./build.rs
-COPY --from=build proto/ proto/
-COPY --from=build /models /models
+COPY ./proto ./proto
+COPY ./models ./models
 
 RUN cargo build --release \
  && rm src/*.rs
