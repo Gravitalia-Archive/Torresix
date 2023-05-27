@@ -1,4 +1,4 @@
-FROM rust:1.69 as build
+FROM rust:1.68 as build
 
 RUN USER=root cargo new --bin torresix
 WORKDIR /torresix
@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y libssl-dev pkg-config protobuf-compiler
 
 RUN cargo build --release --bin server
 
-FROM rust:1.69-slim-buster
+FROM rust:1.68-slim-buster
 
 COPY --from=build /torresix/target/release/server .
 
