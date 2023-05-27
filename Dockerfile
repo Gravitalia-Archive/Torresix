@@ -8,6 +8,8 @@ COPY ./build.rs ./build.rs
 COPY ./proto ./proto
 COPY ./models ./models
 
+RUN apt-get update && apt-get install -y libssl-dev pkg-config protobuf-compiler
+
 RUN cargo build --release \
  && rm src/*.rs
 
