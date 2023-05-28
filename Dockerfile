@@ -15,6 +15,9 @@ RUN cargo build --release --bin server
 
 FROM debian:buster-slim
 
+RUN apt-get update && apt-get install -y libssl3
+RUN apt-get install -y libc6
+
 COPY --from=build /torresix/target/release/server .
 
 EXPOSE 50051
