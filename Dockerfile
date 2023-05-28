@@ -1,4 +1,4 @@
-FROM rust:1.69-slim as builder
+FROM rust:1.69 as build
 
 RUN USER=root cargo new --bin torresix
 WORKDIR /torresix
@@ -11,9 +11,7 @@ COPY ./src ./src
 
 RUN apt-get update && apt-get install -y libssl-dev pkg-config protobuf-compiler
 
-RUN rustup target add x86_64-unknown-linux-musl
-
-RUN cargo build --target x86_64-unknown-linux-musl --release --bin server
+RUN cargo build --release --bin server
 
 FROM debian:latest
 
