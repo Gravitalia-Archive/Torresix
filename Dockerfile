@@ -9,6 +9,8 @@ WORKDIR glibc-2.37
 RUN mkdir build
 WORKDIR build
 
+RUN apt-get install -y gawk bison
+
 RUN ../configure --prefix=/usr
 RUN make
 RUN make install
