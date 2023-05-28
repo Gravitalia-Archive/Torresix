@@ -16,6 +16,7 @@ RUN cargo build --release --bin server
 FROM debian:latest
 
 COPY --from=build /torresix/target/release/server .
+COPY --from=build /torresix/models ./models
 
 EXPOSE 50051
 CMD ["./server"]
