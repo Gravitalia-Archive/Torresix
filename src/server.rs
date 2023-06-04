@@ -38,7 +38,7 @@ impl Torre for TorreSix {
         };
 
         Ok(Response::new(TorreReply {
-            model: 0,
+            model: body.model,
             message: result,
             error: false
         }))
