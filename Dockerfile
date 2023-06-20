@@ -1,7 +1,10 @@
-FROM rust:1.69 as build
+FROM rust:alpine3.18 AS builder
 
 RUN USER=root cargo new --bin torresix
 WORKDIR /torresix
+
+ENV     RUSTFLAGS="-C target-feature=-crt-static"
+RUN     apk add -q --update-cache --no-cache build-base openssl-dev musl pkgconfig protobuf-dev
 
 COPY ./Cargo.toml ./Cargo.toml
 COPY ./build.rs ./build.rs
@@ -9,14 +12,16 @@ COPY ./proto ./proto
 COPY ./models ./models
 COPY ./src ./src
 
-RUN apt-get update && apt-get install -y libssl-dev pkg-config protobuf-compiler
-
 RUN cargo build --release --bin server
 
-FROM debian:latest
+FROM alpine:3.18 AS runtime
 
-COPY --from=build /torresix/target/release/server .
-COPY --from=build /torresix/models ./models
+RUN apk update \
+ && apk add --no-cache libssl1.1 musl-dev libgcc tini curl
+
+COPY --from=builder /torresix/models /bin/models
+COPY --from=builder /torresix/target/release/server /bin/server
 
 EXPOSE 50051
-CMD ["./server"]
+ENTRYPOINT ["tini", "--"]
+CMD     /bin/server
