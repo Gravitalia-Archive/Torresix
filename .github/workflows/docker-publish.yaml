@@ -6,7 +6,7 @@ on:
 
 jobs:
   push_to_registry:
-    name: Publish Autha
+    name: Publish Torresix
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
